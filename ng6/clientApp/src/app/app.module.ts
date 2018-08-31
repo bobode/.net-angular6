@@ -14,6 +14,7 @@ import { JokesModule , } from './jokes/jokes.module';
 import { fakeBackendProvider } from './_helpers';
 
 
+
 import {
   MatButtonModule,
   MatCardModule,
@@ -39,7 +40,7 @@ import { LoginComponent } from './login';
     MatButtonModule,
     MatIconModule,
     BrowserAnimationsModule,
-
+    NgbModule.forRoot(),
     routing
   ],
   declarations: [

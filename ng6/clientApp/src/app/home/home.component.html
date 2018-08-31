@@ -1,16 +1,30 @@
-<p><a [routerLink]="['/login']">Logout</a></p>
-<h1>Home</h1>
-<p>You're logged in with Angular 6 & JWT!!</p>
+<a style="position:absolute; margin-top:-30px;" [routerLink]="['/login']">Logout</a>
 
-<input [(ngModel)]="filter.text" (ngModelChange)="filterUpdated()" placeholder="search text goes here">
-Active Only <input [(ngModel)]="filter.isActive" (ngModelChange)="filterUpdated()" type="checkbox" /> Displaying {{ memberList.length}}
 
-<table lass="table table-striped table-condensed header-fixed">
+
+<table class="table table-striped table-condensed header-fixed">
+  <thead>
+    <tr>
+      <td colspan="2">
+        <input [(ngModel)]="filter.text" (ngModelChange)="filterUpdated()" placeholder="Search Member Name">
+
+      </td>
+      <td colspan="2">
+        <label>
+          Active Only <input [(ngModel)]="filter.isActive" (ngModelChange)="filterUpdated()" type="checkbox" />
+        </label>
+      </td>
+      <td>
+        Showing {{memberList.length}} records.
+      </td>
+    </tr>
+  </thead>
   <tbody>
+
     <tr *ngFor="let member of memberList ">
       <td>
-        {{member.firstName + " " + member.lastName}}
-
+        <p>{{member.firstName + " " + member.lastName}}</p>
+        <button class="btn btn-sm btn-outline-primary" (click)="open(content, member)">Edit</button>
       </td>
       <td>
         <p> {{member.sciMemberId}}</p>
@@ -31,3 +45,54 @@ Active Only <input [(ngModel)]="filter.isActive" (ngModelChange)="filterUpdated(
   </tbody>
 </table>
 
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="form-group  col-lg-3">
+        <label for="first">First Name</label>
+        <input id="first" placeholder="First Name" [(ngModel)]="selectedMember.firstName" />
+        <label for="last">Last Name</label>
+        <input id="last" [(ngModel)]="selectedMember.lastName" />
+        <button ng-click="updateMember(selectedMember)">Update</button>
+        <button ng-click="deleteMember(selectedMember)">Delete Member</button>
+      </div>
+      <div class="col-lg-3 form-group">
+        <input data-toggle="tooltip" title="Address" style="width:100%" placeholder="Address" [(ngModel)]="selectedMember.address1" />
+        <input data-toggle="tooltip" title="City" style="width:45%;" placeholder="City" [(ngModel)]="selectedMember.city" />
+        <input data-toggle="tooltip" title="State" style="width:15%;" placeholder="ST" [(ngModel)]="selectedMember.state" />
+        <input data-toggle="tooltip" title="Zip Code" style="width:36%;" placeholder="Zip" [(ngModel)]="selectedMember.zip" />
+      </div>
+      <div class="col-lg-3 form-group">
+        <input data-toggle="tooltip" title="Sci Member Id" style="width:100%" placeholder="Sci Member Id" [(ngModel)]="selectedMember.sciMemberId" />
+        <input data-toggle="tooltip" title="Member Type" style="width:100%" placeholder="Membership Type" [(ngModel)]="selectedMember.membershipType" />
+        <p style="margin:0 0 0 0;">Member Since: {{formatDate(selectedMember.memberSince) }}</p>
+        <p style="margin:0 0 0 0;">SciPaidThru: {{formatDate(selectedMember.sciPaidThru) }}</p>
+        <p style="margin:0 0 0 0;">ChapterPaidThru: {{formatDate(selectedMember.chapterPaidThru) }}</p>
+        <input type="checkbox" [(ngModel)]="selectedMember.isActive">
+
+        <p style="margin:0 0 0 0;">Active: {{selectedMember.isActive}}</p>
+        <p><button (click)="openCopyPrompt(selectedMember)">Copy info</button></p>
+
+      </div>
+      <div class="col-lg-3 form-group">
+        <input data-toggle="tooltip" title="Email" style="width:100%" placeholder="Email" [(ngModel)]="selectedMember.email" />
+        <input data-toggle="tooltip" title="Phone" style="width:100%" placeholder="Phone" [(ngModel)]="selectedMember.phone" />
+        <input data-toggle="tooltip" title="2nd Phone" style="width:100%" placeholder="2nd Phone" [(ngModel)]="selectedMember.phone2" />
+        <!-- Button trigger modal -->
+        <button type="button" ng-class="(selectedMember.Notes ==null || selectedMember.Notes == '') ?  'btn btn-default':'btn btn-primary' " data-toggle="modal" data-target="#myModal">
+          {{(selectedMember.notes== null ||selectedMember.notes == "") ? 'Add Note' :'Edit Note' }}
+        </button>
+      </div>
+    </div>
+   
+ </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save close')">Close</button>
+  </div>
+</ng-template>

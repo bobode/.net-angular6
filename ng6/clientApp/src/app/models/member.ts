@@ -1,23 +1,23 @@
 export interface Member {
-  Address1: string;
-  ChapterPaidThru: string;
-  City: string;
-  Email: string;
+  address1: string;
+  chapterPaidThru: string;
+  city: string;
+  email: string;
   firstName: string;
   lastName: string;
-  Id: number;
-  Lat: number;
-  Lon: number;
-  MembershipType: string;
-  MemberSince: string;
-  SciMemberId: number;
-  SciPaidThru: string
+  id: number;
+  lat: number;
+  lon: number;
+  membershipType: string;
+  memberSince: string;
+  sciMemberId: number;
+  sciPaidThru: string
   oldKey: number;
-  Notes: string;
+  notes: string;
   phone: string;
   phone2: string;
-  Source: string;
-  State: string;
+  source: string;
+  state: string;
   zip: string;
   isActive: boolean;
 } 

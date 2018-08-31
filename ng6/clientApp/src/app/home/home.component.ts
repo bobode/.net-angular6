@@ -5,16 +5,18 @@ import { User } from '../_models';
 import { UserService, MemberService } from '../_services';
 
 import { Member, Filter } from '../models';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
-
-@Component({ templateUrl: 'home.component.html' })
+@Component({ templateUrl: 'home.component.html', styleUrls: ['./home.component.css'] })
 export class HomeComponent implements OnInit {
   currentUser: User;
   users: User[] = [];
   members: Member[] = [];
   memberList: Member[] = [];
+  selectedMember: Member;
+  closeResult: string;;
   filter: Filter = { text: "", isActive: true };
-  constructor(private userService: UserService, private memberService: MemberService) {
+  constructor(private userService: UserService, private memberService: MemberService, private modalService: NgbModal) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
@@ -47,5 +49,22 @@ export class HomeComponent implements OnInit {
         this.memberList.push(this.members[j]);
 
     }
+  }
+  formatDate(str) {
+    if (str == '')
+      return str
+    return new Date(str).toLocaleDateString();
+  }
+  open(content, member: Member) {
+    this.selectedMember = member;
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size:'lg' }).result.then((result) => {
+  
+    }, (reason) => {
+  
+    });
+  }
+  openCopyPrompt(member) {
+    var text = "\t" + member.lastName + "\t" + member.firstName + "\t" + member.address1 + "\t" + member.city + "\t" + member.state + "\t" + member.zip
+    window.prompt("Copy for excel", text)
   }
 }
