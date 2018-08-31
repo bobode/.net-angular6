@@ -1,9 +1,33 @@
-﻿<h1>Home</h1>
-<p>You're logged in with Angular 6 & JWT!!</p>
-<div>
-    Users from secure api end point:
-    <ul>
-        <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
-    </ul>
-</div>
 <p><a [routerLink]="['/login']">Logout</a></p>
+<h1>Home</h1>
+<p>You're logged in with Angular 6 & JWT!!</p>
+
+<input [(ngModel)]="filter.text" (ngModelChange)="filterUpdated()" placeholder="search text goes here">
+Active Only <input [(ngModel)]="filter.isActive" (ngModelChange)="filterUpdated()" type="checkbox" /> Displaying {{ memberList.length}}
+
+<table lass="table table-striped table-condensed header-fixed">
+  <tbody>
+    <tr *ngFor="let member of memberList ">
+      <td>
+        {{member.firstName + " " + member.lastName}}
+
+      </td>
+      <td>
+        <p> {{member.sciMemberId}}</p>
+        <p> {{ member.membershipType}}</p>
+      </td>
+      <td>
+        <p>{{member.address1}}</p>
+        <p>{{member.city + ", " + member.state + " " + member.zip}}</p>
+      </td>
+      <td>
+        <p>{{(member.phone == "" || member.phone == null) ? "" : "Home Phone "+ member.phone }}</p>
+        <p>{{(member.phone2 == "" || member.phone2 == null) ? "" : "Cell Phone "+ member.phone2 }}</p>
+      </td>
+      <td>
+        {{member.email}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+

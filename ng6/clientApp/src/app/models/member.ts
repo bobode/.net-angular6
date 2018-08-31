@@ -3,8 +3,8 @@ export interface Member {
   ChapterPaidThru: string;
   City: string;
   Email: string;
-  FirstName: string;
-  LastName: string;
+  firstName: string;
+  lastName: string;
   Id: number;
   Lat: number;
   Lon: number;
@@ -19,5 +19,5 @@ export interface Member {
   Source: string;
   State: string;
   zip: string;
-
+  isActive: boolean;
 } 

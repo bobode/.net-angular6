@@ -14,7 +14,7 @@ export class MemberService {
 
   getMembers(): Observable<Member[]> {
     return this.http
-      .get<Member[]>(`https://localhost:44355/api/Members/GetMembers`);
+      .post<Member[]>(`https://localhost:44355/api/Members/GetMembers`, {});
     
   }
   

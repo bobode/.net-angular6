@@ -2,16 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import { User } from '../_models';
-import { UserService } from '../_services';
+import { UserService, MemberService } from '../_services';
 
-import { Member } from '../models';
-import { MemberService } from '../services/members.service';
+import { Member, Filter } from '../models';
+
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
   currentUser: User;
   users: User[] = [];
-  members: Member[] =[];
+  members: Member[] = [];
+  memberList: Member[] = [];
+  filter: Filter = { text: "", isActive: true };
   constructor(private userService: UserService, private memberService: MemberService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
@@ -19,13 +21,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.loadAllUsers();
     this.getMembers();
+    this.memberService.getMembers().pipe(first()).subscribe(members => {
+      this.members = members;
+      this.filterUpdated();
+    });
   }
-
-  //deleteUser(id: number) {
-  //  this.userService.delete(id).pipe(first()).subscribe(() => {
-  //    this.loadAllUsers()
-  //  });
-  //}
 
   private loadAllUsers() {
     this.userService.getAll().pipe(first()).subscribe(users => {
@@ -36,5 +36,16 @@ export class HomeComponent implements OnInit {
     this.memberService.getMembers().pipe(first()).subscribe(members => {
       this.members = members;
     });
+  }
+  filterUpdated() {
+    // todo replace this with rxjs
+    this.memberList = [];
+    for (var j = 0; j < this.members.length; j++) {
+      if (((this.members[j].firstName != null && this.members[j].lastName != null && (this.members[j].firstName.toLowerCase() + ' ' + this.members[j].lastName.toLowerCase()).includes(this.filter.text.toLowerCase()))
+        || this.filter.text === '')
+        && (this.members[j].isActive === this.filter.isActive || this.filter.isActive === false))
+        this.memberList.push(this.members[j]);
+
+    }
   }
 }

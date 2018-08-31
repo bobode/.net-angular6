@@ -27,13 +27,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="clientApp\src\app\filter\filter.pipe.ts" />
+    <None Remove="clientApp\src\app\models\filter.ts" />
     <None Remove="clientApp\src\app\models\member.ts" />
-    <None Remove="clientApp\src\app\services\members.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="clientApp\src\app\filter\filter.pipe.ts" />
+    <TypeScriptCompile Include="clientApp\src\app\models\filter.ts" />
     <TypeScriptCompile Include="clientApp\src\app\models\member.ts" />
-    <TypeScriptCompile Include="clientApp\src\app\services\members.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_services\members.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

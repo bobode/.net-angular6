@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Joke } from '../../models';
-import { JokeService } from '../../services';
+import { JokeService } from '../../_services';
 @Component({
     selector: 'app-joke-card-list',
     templateUrl: './joke-card-list.component.html',

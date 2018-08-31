@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ng6.Controllers
@@ -11,9 +10,11 @@ namespace ng6.Controllers
     public class MembersController : Controller
     {
         private Models.SCIContext db;
+
+       
         public MembersController(Models.SCIContext _db) { this.db = _db; }
 
-        [AllowAnonymous]
+        [HttpPost("getmembers")]
         public JsonResult getMembers()
         {
 
